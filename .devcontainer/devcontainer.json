@@ -1,0 +1,25 @@
+{
+  "name": "Go with Terraform (devcontainer)",
+  "image": "mcr.microsoft.com/devcontainers/base:0-focal",
+  "features": {
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.20"
+    },
+    "ghcr.io/devcontainers/features/terraform:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "eamodio.gitlens",
+        "hashicorp.terraform",
+        "hashicorp.hcl"
+      ],
+      "settings": {
+        "go.toolsManagement.autoUpdate": true
+      }
+    }
+  },
+  "postCreateCommand": "go version && go env GOPATH || true",
+  "remoteUser": "vscode"
+}

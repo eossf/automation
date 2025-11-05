@@ -1,0 +1,54 @@
+{
+  "environments": [
+    {
+      "name": "development",
+      "configuration": {
+        "database": {
+          "host": "dev-db.example.com",
+          "ports": [ "5432", "5433" ],
+          "credentials": {
+            "user": "dev_user",
+            "encrypted": true
+          }
+        },
+        "services": {
+          "api": {
+            "endpoints": ["users", "products", "orders"],
+            "rate_limits": {
+              "requests_per_second": 100,
+              "burst": 150
+            }
+          },
+          "cache": {
+            "type": "redis",
+            "clusters": [
+              {
+                "id": "cache-1",
+                "nodes": ["node1", "node2", "node3"]
+              },
+              {
+                "id": "cache-2",
+                "nodes": ["node4", "node5"]
+              }
+            ]
+          }
+        }
+      },
+      "features": {
+        "authentication": true,
+        "monitoring": {
+          "enabled": true,
+          "intervals": [30, 60, 300],
+          "alerting": {
+            "channels": ["email", "slack", "pagerduty"],
+            "thresholds": {
+              "critical": 90,
+              "warning": 75,
+              "info": 50
+            }
+          }
+        }
+      }
+    }
+  ]
+}
