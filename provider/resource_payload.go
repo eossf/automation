@@ -55,9 +55,18 @@ func resourcePayloadRead(store *PayloadStore) schema.ReadContextFunc {
         store.RUnlock()
 
         if !ok {
-            // resource not found
-            d.SetId("")
-            return diags
+            // store has no entry for this id (store is in-memory and may have been lost between plugin restarts).
+            // Try to recover from the resource's saved state so Terraform doesn't treat the resource as gone.
+            if v, ok2 := d.GetOk("json"); ok2 {
+                jsonVal = v.(string)
+                store.Lock()
+                store.data[id] = jsonVal
+                store.Unlock()
+            } else {
+                // no json in state either — treat as not found
+                d.SetId("")
+                return diags
+            }
         }
 
         if err := d.Set("json", jsonVal); err != nil {

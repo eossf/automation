@@ -5,7 +5,7 @@
       "configuration": {
         "database": {
           "host": "dev-db.example.com",
-          "ports": [ "5432", "5433" ],
+          "ports": [ "5432" ],
           "credentials": {
             "user": "dev_user",
             "encrypted": true

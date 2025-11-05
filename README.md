@@ -43,21 +43,8 @@ terraform {
   }
 }
 
-
 resource "automation_payload" "example" {
   json = jsonencode({ message = "hello" })
-}
-
-output "payload_id" {
-  value = automation_payload.example.id
-}
-
-data "automation_payload" "read" {
-  id = automation_payload.example.id
-}
-
-output "payload_json" {
-  value = data.automation_payload.read.json
 }
 ```
 
